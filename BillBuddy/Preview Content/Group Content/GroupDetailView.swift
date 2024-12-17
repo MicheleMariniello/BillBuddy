@@ -9,12 +9,16 @@ import SwiftUI
 
 struct GroupDetailView: View {
     var groupName: String
-    @State private var selectedTab = 0
     @ObservedObject var groupStore: GroupsModel
+
+    var group: Group {
+        groupStore.groups.first { $0.name == groupName } ?? Group(name: groupName, participants: [])
+    }
+
+    @State private var selectedTab = 0
 
     var body: some View {
         VStack {
-            // Tab Selection (Picker personalizzato)
             Picker("Select Tab", selection: $selectedTab) {
                 Text("Expenses").tag(0)
                 Text("Balances").tag(1)
@@ -23,20 +27,20 @@ struct GroupDetailView: View {
             .pickerStyle(SegmentedPickerStyle())
             .padding()
 
-            // TabView con swipe orizzontale
             TabView(selection: $selectedTab) {
-                ExpensesView(groupStore: groupStore)
+                ExpensesView(groupStore: groupStore, group: group)
                     .tag(0)
-                BalancesView(groupStore: groupStore, groupName: groupName)
+                BalancesView(groupStore: groupStore, group: group)
                     .tag(1)
                 PhotosView()
                     .tag(2)
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
         }
-        .navigationTitle("\(groupName)")
+        .navigationTitle(group.name)
     }
 }
+
 
 struct GroupDetailView_Previews: PreviewProvider {
     static var previews: some View {

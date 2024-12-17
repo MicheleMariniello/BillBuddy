@@ -52,6 +52,33 @@ class GroupsModel: ObservableObject {
             groups = decodedGroups
         }
     }
+    
+    // Rimuove una spesa da un gruppo
+    func removeExpense(from group: Group, at index: Int) {
+        if let groupIndex = groups.firstIndex(where: { $0.id == group.id }) {
+            groups[groupIndex].expenses.remove(at: index)
+            saveGroups()
+            objectWillChange.send() // Aggiorna le viste
+        }
+    }
+
+    // Calcola i bilanci per ogni partecipante del gruppo
+    func calculateBalances(for group: Group) -> [String: Double] {
+        var balances = [String: Double]()
+
+        for expense in group.expenses {
+            // Il pagatore paga l'intero importo
+            balances[expense.payer, default: 0.0] += expense.amount
+
+            // Sottrae l'importo ai partecipanti
+            for (participant, contribution) in expense.contributions {
+                balances[participant, default: 0.0] -= contribution
+            }
+        }
+
+        return balances
+    }
+    
 }
 
 struct GroupsView: View {

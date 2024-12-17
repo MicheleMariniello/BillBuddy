@@ -7,84 +7,70 @@
 import SwiftUI
 
 struct ExpensesView: View {
-    @State private var expenses: [Expense] = []  // Lista delle spese
-    @State private var isAddExpenseViewPresented = false  // Variabile per gestire la visibilità della vista modale
-    @ObservedObject var groupStore: GroupsModel  // Modello condiviso
-    
-    @State private var expenseToDelete: Expense?  // Spesa selezionata per eliminazione
-    @State private var showDeleteConfirmation = false  // Mostra l'alert di conferma
-    
+    @ObservedObject var groupStore: GroupsModel
+    var group: Group
+    @State private var isAddExpenseViewPresented = false
+    @State private var expenseToDelete: Expense?
+    @State private var showDeleteConfirmation = false
+
     var body: some View {
         VStack {
             List {
-                ForEach(expenses, id: \.name) { expense in
-                    Text("\(expense.name)     \(String(format: "%.2f", expense.amount))€    payed by \(expense.payer) ")
+                ForEach(group.expenses, id: \.name) { expense in
+                    Text("\(expense.name) - \(String(format: "%.2f", expense.amount))€ - Paid by \(expense.payer)")
                         .font(.headline)
                         .onLongPressGesture {
                             expenseToDelete = expense
                             showDeleteConfirmation = true
                         }
                 }
-            }
-        }
-        .navigationTitle("Expenses") // Gestione del titolo
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    isAddExpenseViewPresented = true
-                }) {
-                    Image(systemName: "plus.circle") // Icona di aggiunta
-                        .font(.title2) // Dimensione del font per l'icona
+                .onDelete { indexSet in
+                    deleteExpense(at: indexSet)
                 }
+            }
+            .confirmationDialog("Are you sure you want to delete this expense?",
+                                isPresented: $showDeleteConfirmation) {
+                Button("Delete", role: .destructive) {
+                    if let expense = expenseToDelete {
+                        deleteExpense(expense: expense)
+                    }
+                }
+                Button("Cancel", role: .cancel) { }
+            }
+            Button("Add Expense") {
+                isAddExpenseViewPresented = true
             }
         }
         .sheet(isPresented: $isAddExpenseViewPresented) {
-            AddExpenseView(isPresented: $isAddExpenseViewPresented, groupStore: groupStore, expenses: $expenses)
-        }
-        .alert(isPresented: $showDeleteConfirmation) {
-            Alert(
-                title: Text("Delete Expense"),
-                message: Text("Are you sure you want to delete this expense?"),
-                primaryButton: .destructive(Text("Delete")) {
-                    if let expense = expenseToDelete {
-                        deleteExpense(expense)
-                    }
-                },
-                secondaryButton: .cancel()
+            AddExpenseView(
+                isPresented: $isAddExpenseViewPresented,
+                groupStore: groupStore,
+                expenses: Binding(
+                    get: { group.expenses },
+                    set: { _ in } // Non modificabile direttamente
+                )
             )
         }
-        .onAppear {
-            loadExpenses()
+        .navigationTitle("Expenses")
+    }
+
+    func deleteExpense(at offsets: IndexSet) {
+        if let index = offsets.first {
+            groupStore.removeExpense(from: group, at: index)
         }
     }
-    
-    // Funzione per caricare le spese salvate
-    func loadExpenses() {
-        if let data = UserDefaults.standard.data(forKey: "SavedExpenses"),
-           let savedExpenses = try? JSONDecoder().decode([Expense].self, from: data) {
-            expenses = savedExpenses
-        }
-    }
-    
-    // Elimina la spesa
-    func deleteExpense(_ expense: Expense) {
-        if let index = expenses.firstIndex(where: { $0.name == expense.name }) {
-            expenses.remove(at: index)
-            saveExpenses() // Aggiorna UserDefaults
-        }
-    }
-    
-    // Salva le spese in UserDefaults
-    func saveExpenses() {
-        if let encoded = try? JSONEncoder().encode(expenses) {
-            UserDefaults.standard.set(encoded, forKey: "SavedExpenses")
+
+    func deleteExpense(expense: Expense) {
+        if let index = group.expenses.firstIndex(where: { $0.name == expense.name }) {
+            groupStore.removeExpense(from: group, at: index)
         }
     }
 }
 
-struct ExpensesView_Previews: PreviewProvider {
-    static var previews: some View {
-        let groupStore = GroupsModel()
-        ExpensesView(groupStore: groupStore)
-    }
-}
+
+//struct ExpensesView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let groupStore = GroupsModel()
+//        ExpensesView(groupStore: groupStore)
+//    }
+//}
