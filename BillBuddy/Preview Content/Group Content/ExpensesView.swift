@@ -13,11 +13,28 @@ struct ExpensesView: View {
     @State private var expenseToDelete: Expense?
     @State private var showDeleteConfirmation = false
 
+    // Calcola la somma di tutte le spese
+    private var totalExpenses: Double {
+        group.expenses.reduce(0) { $0 + $1.amount }
+    }
+
+    // Calcola la somma delle spese che l'utente deve pagare (la sua parte)
+    private var myExpenses: Double {
+        group.expenses.reduce(0) { total, expense in
+            // Se l'utente è un partecipante della spesa, aggiungi la sua parte
+            if expense.participants.contains("me") {
+                let share = expense.amount / Double(expense.participants.count)
+                return total + share
+            }
+            return total
+        }
+    }
+
     var body: some View {
-        VStack(spacing: 0) { // Aggiungo uno spazio tra i componenti
+        VStack(spacing: 0) {
             // Contenitore per il bottone, allineato a destra
             HStack {
-                Spacer() // Spinge il bottone a destra
+                Spacer()
                 Button(action: {
                     isAddExpenseViewPresented = true
                 }) {
@@ -30,6 +47,22 @@ struct ExpensesView: View {
                 .padding()
             }
             .background(Color.accentColor5)
+            
+            // Somma delle spese
+            HStack {
+                Spacer()
+                Text("My Expenses:\n \(String(format: "%.2f", myExpenses))€")
+                    .font(.headline)
+                    .foregroundColor(.accentColor)
+                Spacer()
+                Text("Total Expenses:\n\(String(format: "%.2f", totalExpenses))€")
+                    .font(.headline)
+                    .foregroundColor(.accentColor)
+                Spacer()
+            }
+            .padding(.horizontal) // Margini laterali
+            .padding(.vertical, 8) // Margine verticale
+            .background(Color.gray.opacity(0.1)) // Sfondo per la sezione
             
             // Lista delle spese
             List {
@@ -80,6 +113,7 @@ struct ExpensesView: View {
         }
     }
 }
+
 
 //struct ExpensesView_Previews: PreviewProvider {
 //    static var previews: some View {

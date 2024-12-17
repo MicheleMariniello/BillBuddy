@@ -11,6 +11,7 @@ struct AddGroupView: View {
     @State private var groupName = ""
     @State private var participantName = ""
     @State private var participants: [String] = [] // Array dei partecipanti
+    @State private var isFirstParticipant = true // Flag per identificare il primo partecipante
     
     var onAddGroup: (String, [String]) -> Void
     
@@ -22,6 +23,9 @@ struct AddGroupView: View {
                 }
                 
                 Section(header: Text("Participants")) {
+                    Text("The first participant you add is you.\nYou will be identified as 'me'.")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
                     ForEach(participants, id: \.self) { participant in
                         HStack {
                             Text(participant)
@@ -40,13 +44,12 @@ struct AddGroupView: View {
                             .disableAutocorrection(true)
                         Button(action: addParticipant) {
                             Image(systemName: "plus.circle.fill")
-                                .foregroundColor(.accentColor2)
+                                .foregroundColor(.accentColor)
                         }
                         .disabled(participantName.isEmpty) // Disabilita se il campo è vuoto
                     }
                 }
             }
-            //            .navigationTitle("Add Group")
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
@@ -67,6 +70,13 @@ struct AddGroupView: View {
     // Funzione per aggiungere un partecipante
     private func addParticipant() {
         participants.append(participantName.trimmingCharacters(in: .whitespacesAndNewlines))
+        
+        // Imposta il primo partecipante come "me"
+        if isFirstParticipant {
+            participants[0] = "me"  // Modifica il primo partecipante a "me"
+            isFirstParticipant = false
+        }
+        
         participantName = ""
     }
     
