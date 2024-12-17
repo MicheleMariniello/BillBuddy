@@ -35,7 +35,6 @@ struct Group: Identifiable, Codable {
             expenses = decodedExpenses
         }
     }
-    
 }
 
 class GroupsModel: ObservableObject {

@@ -4,7 +4,6 @@
 //
 //  Created by Michele Mariniello on 09/12/24.
 //
-//Corretto
 import SwiftUI
 
 struct GroupDetailView: View {
@@ -41,7 +40,6 @@ struct GroupDetailView: View {
     }
 }
 
-
 struct GroupDetailView_Previews: PreviewProvider {
     static var previews: some View {
         GroupDetailView(
@@ -50,5 +48,3 @@ struct GroupDetailView_Previews: PreviewProvider {
         )
     }
 }
-
-

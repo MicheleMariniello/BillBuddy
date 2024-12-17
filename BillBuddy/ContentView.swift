@@ -16,36 +16,19 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 TabView(selection: $selectedTab) {
-                    FriendsView()
-                        .tabItem {
-                            Label("Friends", systemImage: "person.2.fill")
-                        }
-                        .tag(0)
-                    
                     GroupsView(groupStore: groupStore)
                         .tabItem {
                             Label("Groups", systemImage: "rectangle.3.group.fill")
                         }
-                        .tag(1)
-
-                    // Usa un contenitore interattivo per il tab "+"
-                    Color.clear
+                        .tag(0)
+                    FriendsView()
                         .tabItem {
-                            Label("Add", systemImage: "plus.circle.fill")
+                            Label("Friends", systemImage: "person.2.fill")
                         }
-                        .tag(2)
-                        .onAppear {
-                            isAddExpenseViewPresented = true
-                            selectedTab = 0  // Torna alla tab principale per evitare interferenze
-                        }
-//                    ActivityView()
-//                        .tabItem {
-//                            Label("Activity", systemImage: "chart.bar.fill")
-//                        }
-//                        .tag(3)
+                        .tag(1)
                     AccountView()
                         .tabItem {
-                            Label("Account", systemImage: "gearshape.fill")
+                            Label("Profile", systemImage: "gearshape.fill")
                         }
                         .tag(4)
                 }
@@ -57,11 +40,6 @@ struct ContentView: View {
         }
     }
 }
-
-
-
-
-
 
 #Preview {
     ContentView()

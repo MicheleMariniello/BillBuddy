@@ -37,9 +37,6 @@ struct ExpensesView: View {
                 }
                 Button("Cancel", role: .cancel) { }
             }
-            Button("Add Expense") {
-                isAddExpenseViewPresented = true
-            }
         }
         .sheet(isPresented: $isAddExpenseViewPresented) {
             AddExpenseView(
@@ -52,6 +49,16 @@ struct ExpensesView: View {
             )
         }
         .navigationTitle("Expenses")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    isAddExpenseViewPresented = true
+                }) {
+                    Image(systemName: "plus")
+                        .font(.title)
+                }
+            }
+        }
     }
 
     func deleteExpense(at offsets: IndexSet) {
@@ -66,7 +73,6 @@ struct ExpensesView: View {
         }
     }
 }
-
 
 //struct ExpensesView_Previews: PreviewProvider {
 //    static var previews: some View {

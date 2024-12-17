@@ -4,7 +4,6 @@
 //
 //  Created by Michele Mariniello on 09/12/24.
 //
-//Corretto
 import SwiftUI
 
 // Modello Expense
@@ -17,7 +16,6 @@ struct Expense: Codable {
     var participants: [String]
     var contributions: [String: Double] // Nuovo campo per i contributi
 }
-
 
 struct AddExpenseView: View {
     @Binding var isPresented: Bool  // Gestione della visibilità
@@ -137,7 +135,6 @@ struct AddExpenseView: View {
                 }
 
             }
-//            .navigationTitle("Add Expense")
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
@@ -237,7 +234,6 @@ struct AddExpenseView: View {
 
 
 }
-
 
 struct AddExpenseView_Previews: PreviewProvider {
     static var previews: some View {

@@ -29,8 +29,8 @@ struct BalancesView: View {
     }
 }
 
-
-
-//#Preview {
-//    BalancesView()
+//struct BalancesView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        BalancesView(groupStore: groupStore, group: group)
+//    }
 //}
