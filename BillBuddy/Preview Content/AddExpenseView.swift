@@ -227,14 +227,14 @@ struct AddExpenseView: View {
             contributions: contributions
         )
 
-        // Aggiunge la spesa al gruppo corrispondente
+        // Aggiungi la spesa al gruppo corrispondente
         if let groupIndex = groupStore.groups.firstIndex(where: { $0.name == group }) {
-            groupStore.groups[groupIndex].expenses.append(newExpense)
-            groupStore.objectWillChange.send()
+            groupStore.addExpense(to: groupStore.groups[groupIndex], expense: newExpense) // Aggiungi la spesa e salva
         }
 
         isPresented = false
     }
+
 
 }
 

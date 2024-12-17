@@ -20,6 +20,22 @@ struct Group: Identifiable, Codable {
         self.participants = participants
         self.expenses = expenses
     }
+    
+    // Funzione per salvare le spese del gruppo
+    func saveExpenses() {
+        if let encoded = try? JSONEncoder().encode(expenses) {
+            UserDefaults.standard.set(encoded, forKey: "Expenses_\(id.uuidString)")
+        }
+    }
+    
+    // Funzione per caricare le spese del gruppo
+    mutating func loadExpenses() {
+        if let savedData = UserDefaults.standard.data(forKey: "Expenses_\(id.uuidString)"),
+           let decodedExpenses = try? JSONDecoder().decode([Expense].self, from: savedData) {
+            expenses = decodedExpenses
+        }
+    }
+    
 }
 
 class GroupsModel: ObservableObject {
@@ -56,8 +72,18 @@ class GroupsModel: ObservableObject {
     // Rimuove una spesa da un gruppo
     func removeExpense(from group: Group, at index: Int) {
         if let groupIndex = groups.firstIndex(where: { $0.id == group.id }) {
+            groups[groupIndex].saveExpenses() // Salva le modifiche delle spese
             groups[groupIndex].expenses.remove(at: index)
             saveGroups()
+            objectWillChange.send() // Aggiorna le viste
+        }
+    }
+    
+    func addExpense(to group: Group, expense: Expense) {
+        if let groupIndex = groups.firstIndex(where: { $0.id == group.id }) {
+            groups[groupIndex].expenses.append(expense)
+            groups[groupIndex].saveExpenses() // Salva le modifiche delle spese
+            saveGroups() // Salva anche i gruppi
             objectWillChange.send() // Aggiorna le viste
         }
     }
