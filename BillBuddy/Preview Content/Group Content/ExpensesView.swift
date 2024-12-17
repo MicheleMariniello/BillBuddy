@@ -14,7 +14,24 @@ struct ExpensesView: View {
     @State private var showDeleteConfirmation = false
 
     var body: some View {
-        VStack {
+        VStack(spacing: 0) { // Aggiungo uno spazio tra i componenti
+            // Contenitore per il bottone, allineato a destra
+            HStack {
+                Spacer() // Spinge il bottone a destra
+                Button(action: {
+                    isAddExpenseViewPresented = true
+                }) {
+                    HStack {
+                        Image(systemName: "plus.circle.fill")
+                            .font(.title)
+                            .foregroundColor(.accentColor)
+                    }
+                }
+                .padding()
+            }
+            .background(Color.accentColor5)
+            
+            // Lista delle spese
             List {
                 ForEach(group.expenses, id: \.name) { expense in
                     Text("\(expense.name) - \(String(format: "%.2f", expense.amount))€ - Paid by \(expense.payer)")
@@ -49,16 +66,6 @@ struct ExpensesView: View {
             )
         }
         .navigationTitle("Expenses")
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    isAddExpenseViewPresented = true
-                }) {
-                    Image(systemName: "plus")
-                        .font(.title)
-                }
-            }
-        }
     }
 
     func deleteExpense(at offsets: IndexSet) {
