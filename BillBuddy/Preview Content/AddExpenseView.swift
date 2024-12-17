@@ -227,13 +227,13 @@ struct AddExpenseView: View {
             contributions: contributions
         )
 
-        // Aggiunge la nuova spesa alla lista
-        expenses.append(newExpense)
-
-        // Salva la lista delle spese in UserDefaults
-        if let data = try? JSONEncoder().encode(expenses) {
-            UserDefaults.standard.set(data, forKey: "SavedExpenses")
+        // Aggiunge la spesa al gruppo corrispondente
+        if let groupIndex = groupStore.groups.firstIndex(where: { $0.name == group }) {
+            groupStore.groups[groupIndex].expenses.append(newExpense)
+            groupStore.objectWillChange.send()
         }
+
+        isPresented = false
     }
 
 }

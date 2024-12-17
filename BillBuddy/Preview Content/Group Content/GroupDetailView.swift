@@ -27,7 +27,7 @@ struct GroupDetailView: View {
             TabView(selection: $selectedTab) {
                 ExpensesView(groupStore: groupStore)
                     .tag(0)
-                BalancesView()
+                BalancesView(groupStore: groupStore, groupName: groupName)
                     .tag(1)
                 PhotosView()
                     .tag(2)
