@@ -27,28 +27,16 @@ struct GroupDetailView: View {
             TabView(selection: $selectedTab) {
                 ExpensesView(groupStore: groupStore)
                     .tag(0)
-//                    .tabItem {
-//                        Label("Expenses", systemImage: "list.bullet")
-//                    }
-
                 BalancesView()
                     .tag(1)
-//                    .tabItem {
-//                        Label("Balances", systemImage: "person.2")
-//                    }
-
                 PhotosView()
                     .tag(2)
-//                    .tabItem {
-//                        Label("Photos", systemImage: "photo")
-//                    }
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
         }
         .navigationTitle("\(groupName)")
     }
 }
-
 
 struct GroupDetailView_Previews: PreviewProvider {
     static var previews: some View {

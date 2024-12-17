@@ -4,7 +4,6 @@
 //
 //  Created by Michele Mariniello on 09/12/24.
 //
-//Corretto
 import SwiftUI
 
 struct ActivityView: View {

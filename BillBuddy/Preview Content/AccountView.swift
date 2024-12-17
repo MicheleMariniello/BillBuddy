@@ -4,7 +4,6 @@
 //
 //  Created by Michele Mariniello on 09/12/24.
 //
-//Corretto
 import SwiftUI
 
 struct AccountView: View {
@@ -47,7 +46,6 @@ struct AccountView: View {
         .preferredColorScheme(isDarkMode ? .dark : .light)  // Applica la modalità selezionata
     }
 }
-
 
 #Preview {
     AccountView()

@@ -12,7 +12,7 @@ struct Group: Identifiable, Codable {
     var name: String
     var participants: [String]
     var expenses: [Expense] // Lista di spese
-
+    
     // Inizializzatore
     init(id: UUID = UUID(), name: String, participants: [String], expenses: [Expense] = []) {
         self.id = id
@@ -22,31 +22,30 @@ struct Group: Identifiable, Codable {
     }
 }
 
-
 class GroupsModel: ObservableObject {
     @Published var groups: [Group] = [] // Lista di gruppi condivisi
-
+    
     init() {
         loadGroups()
     }
-
+    
     func addGroup(name: String, participants: [String]) {
         let newGroup = Group(name: name, participants: participants)
         groups.append(newGroup)
         saveGroups()
     }
-
+    
     func deleteGroup(_ group: Group) {
         groups.removeAll { $0.id == group.id }
         saveGroups()
     }
-
+    
     private func saveGroups() {
         if let encoded = try? JSONEncoder().encode(groups) {
             UserDefaults.standard.set(encoded, forKey: "SavedGroups")
         }
     }
-
+    
     private func loadGroups() {
         if let savedData = UserDefaults.standard.data(forKey: "SavedGroups"),
            let decodedGroups = try? JSONDecoder().decode([Group].self, from: savedData) {
@@ -62,7 +61,7 @@ struct GroupsView: View {
     @State private var showDeleteConfirmation = false // Stato per confermare la cancellazione
     @State private var showLongPressConfirmation = false // Stato per la conferma di lunga pressione
     @State private var groupToDeleteOnLongPress: Group? = nil // Gruppo da cancellare con lunga pressione
-
+    
     var body: some View {
         NavigationView {
             ScrollView { // Usa ScrollView per consentire lo scorrimento delle Cards
@@ -73,11 +72,11 @@ struct GroupsView: View {
                                 // Card
                                 RoundedRectangle(cornerRadius: 15)
                                     .fill(Color.accentColor3)
-//                                    .shadow(radius: 5)
+                                //                                    .shadow(radius: 5)
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 15)
                                             .stroke(Color.accentColor, lineWidth: 2)
-                                            )// Aggiunge un bordo rosso
+                                    )// Aggiunge un bordo rosso
                                 VStack(alignment: .leading) {
                                     Text(group.name) // Visualizza solo il nome del gruppo
                                         .font(.system(size: 24, weight: .bold))
@@ -149,7 +148,6 @@ struct GroupsView: View {
         }
     }
 }
-
 
 struct GroupsView_Previews: PreviewProvider {
     static var previews: some View {

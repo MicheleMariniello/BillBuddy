@@ -68,7 +68,7 @@ struct PhotosView: View {
             }
             .padding(.top, 60) // Mantieni il padding globale per separare dall'header
             .background(Color.accentColor5.ignoresSafeArea())
-
+            
             // Bottone '+' fisso in alto a destra
             VStack {
                 HStack {
@@ -133,7 +133,6 @@ struct PhotosView: View {
         UserDefaults.standard.set(cards, forKey: "cards")
     }
 }
-
 
 struct PhotosView_Previews: PreviewProvider {
     static var previews: some View {

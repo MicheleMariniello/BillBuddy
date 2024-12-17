@@ -10,10 +10,10 @@ struct ExpensesView: View {
     @State private var expenses: [Expense] = []  // Lista delle spese
     @State private var isAddExpenseViewPresented = false  // Variabile per gestire la visibilità della vista modale
     @ObservedObject var groupStore: GroupsModel  // Modello condiviso
-
+    
     @State private var expenseToDelete: Expense?  // Spesa selezionata per eliminazione
     @State private var showDeleteConfirmation = false  // Mostra l'alert di conferma
-
+    
     var body: some View {
         VStack {
             List {
@@ -57,7 +57,7 @@ struct ExpensesView: View {
             loadExpenses()
         }
     }
-
+    
     // Funzione per caricare le spese salvate
     func loadExpenses() {
         if let data = UserDefaults.standard.data(forKey: "SavedExpenses"),
@@ -65,7 +65,7 @@ struct ExpensesView: View {
             expenses = savedExpenses
         }
     }
-
+    
     // Elimina la spesa
     func deleteExpense(_ expense: Expense) {
         if let index = expenses.firstIndex(where: { $0.name == expense.name }) {
@@ -73,7 +73,7 @@ struct ExpensesView: View {
             saveExpenses() // Aggiorna UserDefaults
         }
     }
-
+    
     // Salva le spese in UserDefaults
     func saveExpenses() {
         if let encoded = try? JSONEncoder().encode(expenses) {
@@ -81,8 +81,6 @@ struct ExpensesView: View {
         }
     }
 }
-
-
 
 struct ExpensesView_Previews: PreviewProvider {
     static var previews: some View {

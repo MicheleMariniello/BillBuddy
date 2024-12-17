@@ -38,20 +38,17 @@ struct ContentView: View {
                             isAddExpenseViewPresented = true
                             selectedTab = 0  // Torna alla tab principale per evitare interferenze
                         }
-
 //                    ActivityView()
 //                        .tabItem {
 //                            Label("Activity", systemImage: "chart.bar.fill")
 //                        }
 //                        .tag(3)
-                    
                     AccountView()
                         .tabItem {
                             Label("Account", systemImage: "gearshape.fill")
                         }
                         .tag(4)
                 }
-
             }
             // Quando isAddExpenseViewPresented è true, si apre la sheet
             .sheet(isPresented: $isAddExpenseViewPresented) {
