@@ -30,6 +30,14 @@ struct ExpensesView: View {
         }
     }
     
+    private func formattedForAccessibility(_ number: Double) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 2
+        formatter.minimumFractionDigits = 2
+        return formatter.string(from: NSNumber(value: number)) ?? "\(number)"
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             // Contenitore per il bottone, allineato a destra
@@ -62,7 +70,7 @@ struct ExpensesView: View {
                         .foregroundColor(.accentColor)
                 }
                 .accessibilityElement(children: .combine)
-                .accessibilityLabel("My Expenses \(myExpenses)")
+                .accessibilityLabel("My Expenses \(formattedForAccessibility(myExpenses))")
                 Spacer()
                 VStack {
                     Text("Total Expenses:")
@@ -73,7 +81,7 @@ struct ExpensesView: View {
                         .foregroundColor(.accentColor)
                 }
                 .accessibilityElement(children: .combine)
-                .accessibilityLabel("Total Expenses \(totalExpenses)")
+                .accessibilityLabel("Total Expenses \(formattedForAccessibility(totalExpenses))")
                 Spacer()
             }
             .padding(.horizontal) // Margini laterali
