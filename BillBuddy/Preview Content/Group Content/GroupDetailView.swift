@@ -9,13 +9,13 @@ import SwiftUI
 struct GroupDetailView: View {
     var groupName: String
     @ObservedObject var groupStore: GroupsModel
-
+    
     var group: Group {
         groupStore.groups.first { $0.name == groupName } ?? Group(name: groupName, participants: [])
     }
-
+    
     @State private var selectedTab = 0
-
+    
     var body: some View {
         VStack {
             Picker("Select Tab", selection: $selectedTab) {
@@ -25,7 +25,7 @@ struct GroupDetailView: View {
             }
             .pickerStyle(SegmentedPickerStyle())
             .padding()
-
+            
             TabView(selection: $selectedTab) {
                 ExpensesView(groupStore: groupStore, group: group)
                     .tag(0)

@@ -11,9 +11,9 @@ struct AccountView: View {
     @State private var email = ""
     @State private var currency = "€"
     @State private var isDarkMode = false  // Variabile per la modalità scura
-
+    
     let currencies = ["€", "$", "£"]
-
+    
     var body: some View {
         Form {
             Section(header: Text("User Info")) {
@@ -30,7 +30,7 @@ struct AccountView: View {
                 }
                 .pickerStyle(SegmentedPickerStyle())
             }
-
+            
             Section(header: Text("Appearance")) {
                 HStack {
                     Text("Dark Mode")

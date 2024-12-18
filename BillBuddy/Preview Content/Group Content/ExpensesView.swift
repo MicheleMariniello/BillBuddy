@@ -53,13 +53,23 @@ struct ExpensesView: View {
             // Somma delle spese
             HStack {
                 Spacer()
-                Text("My Expenses:\n \(String(format: "%.2f", myExpenses))€")
-                    .font(.headline)
-                    .foregroundColor(.accentColor)
+                VStack {
+                    Text("My Expenses:")
+                        .font(.headline)
+                        .foregroundColor(.accentColor)
+                    Text("\(String(format: "%.2f", myExpenses))€")
+                        .font(.headline)
+                        .foregroundColor(.accentColor)
+                }
                 Spacer()
-                Text("Total Expenses:\n\(String(format: "%.2f", totalExpenses))€")
-                    .font(.headline)
-                    .foregroundColor(.accentColor)
+                VStack {
+                    Text("Total Expenses:")
+                        .font(.headline)
+                        .foregroundColor(.accentColor)
+                    Text("\(String(format: "%.2f", totalExpenses))€")
+                        .font(.headline)
+                        .foregroundColor(.accentColor)
+                }
                 Spacer()
             }
             .padding(.horizontal) // Margini laterali
@@ -127,7 +137,6 @@ struct ExpensesView: View {
         }
     }
 }
-
 
 //struct ExpensesView_Previews: PreviewProvider {
 //    static var previews: some View {

@@ -12,7 +12,6 @@ struct AddGroupView: View {
     @State private var participantName = ""
     @State private var participants: [String] = [] // Array dei partecipanti
     @State private var isFirstParticipant = true // Flag per identificare il primo partecipante
-    
     var onAddGroup: (String, [String]) -> Void
     
     var body: some View {
@@ -21,7 +20,6 @@ struct AddGroupView: View {
                 Section(header: Text("Group Details")) {
                     TextField("Group Name", text: $groupName)
                 }
-                
                 Section(header: Text("Participants")) {
                     Text("The first participant you add is you.\nYou will be identified as 'me'.")
                         .font(.subheadline)
@@ -38,7 +36,6 @@ struct AddGroupView: View {
                             }
                         }
                     }
-                    
                     HStack {
                         TextField("Add Participant", text: $participantName)
                             .disableAutocorrection(true)
@@ -76,7 +73,6 @@ struct AddGroupView: View {
             participants[0] = "me"  // Modifica il primo partecipante a "me"
             isFirstParticipant = false
         }
-        
         participantName = ""
     }
     

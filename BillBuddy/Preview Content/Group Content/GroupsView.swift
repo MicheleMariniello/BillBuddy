@@ -103,7 +103,6 @@ class GroupsModel: ObservableObject {
 
         return balances
     }
-    
 }
 
 struct GroupsView: View {

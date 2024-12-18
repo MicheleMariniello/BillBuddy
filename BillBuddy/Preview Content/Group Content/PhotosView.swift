@@ -12,17 +12,17 @@ struct PhotosView: View {
     @State private var showDeleteConfirmation = false // Stato per confermare la cancellazione
     @State private var showLongPressConfirmation = false // Stato per la conferma di lunga pressione
     @State private var cardToDeleteOnLongPress: String? = nil // Card da eliminare con lunga pressione
-
+    
     // Definiamo i GridItem per la disposizione delle card nella griglia
     private let columns = [GridItem(.flexible(), spacing: 10), GridItem(.flexible(), spacing: 10)] // Due colonne con uno spazio tra le card
-
+    
     // Carica le card salvate in UserDefaults all'inizializzazione
     init() {
         if let savedCards = UserDefaults.standard.array(forKey: "cards") as? [String] {
             _cards = State(initialValue: savedCards)
         }
     }
-
+    
     var body: some View {
         VStack(spacing: 0) {
             // Bottone "+"
@@ -42,7 +42,7 @@ struct PhotosView: View {
                 .padding()
             }
             .background(Color.accentColor5)
-
+            
             // Griglia delle cards
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 15) {
@@ -108,20 +108,20 @@ struct PhotosView: View {
             )
         }
     }
-
+    
     // Funzioni di utilità
     func addCard() {
         cards.append("New Album \(cards.count + 1)")
         saveCards()
     }
-
+    
     func deleteCard(_ card: String) {
         if let index = cards.firstIndex(of: card) {
             cards.remove(at: index)
             saveCards()
         }
     }
-
+    
     func saveCards() {
         UserDefaults.standard.set(cards, forKey: "cards")
     }
