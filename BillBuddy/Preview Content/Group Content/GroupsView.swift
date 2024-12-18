@@ -165,6 +165,7 @@ struct GroupsView: View {
                     }) {
                         Image(systemName: "plus")
                     }
+                    .accessibilityLabel("Button plus, Tap to add a new group") // Descrizione
                 }
             }
             .sheet(isPresented: $showAddGroupSheet) {

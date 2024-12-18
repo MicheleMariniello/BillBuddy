@@ -44,7 +44,7 @@ struct ExpensesView: View {
                             .foregroundColor(.accentColor)
                     }
                 }
-                .accessibilityLabel("Aggiungi una spesa") // Etichetta di accessibilità
+                .accessibilityLabel("Button plus") // Etichetta di accessibilità
                 .accessibilityHint("Tap to add a new expense") // Suggerimento di accessibilità
                 .padding()
             }
@@ -61,6 +61,8 @@ struct ExpensesView: View {
                         .font(.headline)
                         .foregroundColor(.accentColor)
                 }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("My Expenses \(myExpenses)")
                 Spacer()
                 VStack {
                     Text("Total Expenses:")
@@ -70,6 +72,8 @@ struct ExpensesView: View {
                         .font(.headline)
                         .foregroundColor(.accentColor)
                 }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("Total Expenses \(totalExpenses)")
                 Spacer()
             }
             .padding(.horizontal) // Margini laterali
@@ -95,7 +99,6 @@ struct ExpensesView: View {
                     }
                     .accessibilityElement(children: .combine) // Combinare tutti gli elementi figli come un'unica unità
                     .accessibilityLabel("\(expense.name), \(String(format: "%.2f", expense.amount))€, Paid by \(expense.payer)") // Descrizione dell'elemento
-                    .accessibilityHint("Tocca per vedere o modificare questa spesa") // Suggerimento di accessibilità
                 }
                 .onDelete { indexSet in
                     deleteExpense(at: indexSet)

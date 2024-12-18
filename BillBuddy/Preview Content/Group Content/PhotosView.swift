@@ -37,8 +37,7 @@ struct PhotosView: View {
                             .foregroundColor(.accentColor)
                     }
                 }
-                .accessibilityLabel("Aggiungi una spesa") // Etichetta di accessibilità
-                .accessibilityHint("Tap to add a new album") // Suggerimento di
+                .accessibilityHint("Button plus, Tap to add a new album") // Suggerimento di
                 .padding()
             }
             .background(Color.accentColor5)
