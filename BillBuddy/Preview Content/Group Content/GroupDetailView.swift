@@ -23,7 +23,7 @@ struct GroupDetailView: View {
                 Text("Balances").tag(1)
                 Text("Photos").tag(2)
             }
-            .pickerStyle(SegmentedPickerStyle())
+            .pickerStyle(PalettePickerStyle())
             .padding()
             
             TabView(selection: $selectedTab) {

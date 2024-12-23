@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var isAddExpenseViewPresented = false  // Variabile per gestire la visibilità della vista modale
+//    @State private var isAddExpenseViewPresented = false  // Variabile per gestire la visibilità della vista modale
     @State private var expenses: [Expense] = []  // Lista di spese
     @State private var selectedTab = 0  // Variabile per tenere traccia della tab selezionata
     @StateObject private var groupStore = GroupsModel()  // Istanza condivisa del modello GroupsModel
@@ -33,10 +33,10 @@ struct ContentView: View {
                         .tag(4)
                 }
             }
-            // Quando isAddExpenseViewPresented è true, si apre la sheet
-            .sheet(isPresented: $isAddExpenseViewPresented) {
-                AddExpenseView(isPresented: $isAddExpenseViewPresented, groupStore: groupStore, expenses: $expenses)
-            }
+//             Quando isAddExpenseViewPresented è true, si apre la sheet
+//            .sheet(isPresented: $isAddExpenseViewPresented) {
+//                AddExpenseView(isPresented: $isAddExpenseViewPresented, groupStore: groupStore, expenses: $expenses)
+//            }
         }
     }
 }

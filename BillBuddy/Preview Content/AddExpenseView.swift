@@ -24,13 +24,13 @@ struct AddExpenseView: View {
     @State private var expenseName = ""
     @State private var amount = ""
     @State private var payer = ""
-    @State private var category = "General"
+    @State private var category = ""
     @State private var selectedParticipants: Set<String> = []  // Partecipanti selezionati
     @State private var contributions: [String: Double] = [:]  // Contributi personalizzati
     @State private var showAlert = false  // Stato per mostrare l'alert
     @State private var missingFields: [String] = []  // Campi mancanti
     
-    let categories = ["General", "Food", "Travel", "Accommodation", "Other"]
+    let categories = ["Accommodation", "Food", "Travel", "Other"]
     
     @Binding var expenses: [Expense]
     
@@ -48,13 +48,14 @@ struct AddExpenseView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Expense Details")) {
+                Section(header: Text("Expense Details").font(.callout)) {
                     Picker("Group", selection: $group) {
                         ForEach(groupStore.groups.map { $0.name }, id: \ .self) { groupName in
                             Text(groupName).tag(groupName)
                         }
                     }
-                    .onChange(of: group) {                         selectedParticipants.removeAll() // Resetta i partecipanti quando cambia gruppo
+                    .onChange(of: group) {
+                        selectedParticipants.removeAll() // Resetta i partecipanti quando cambia gruppo
                         contributions.removeAll()
                     }
                     
@@ -76,16 +77,16 @@ struct AddExpenseView: View {
                     }
                 }
                 
-                Section(header: Text("Category")) {
-                    Picker("Category", selection: $category) {
-                        ForEach(categories, id: \ .self) { category in
-                            Text(category)
-                        }
-                    }
-                    .pickerStyle(MenuPickerStyle())
-                }
+//                Section(header: Text("Category")) {
+//                    Picker("Category", selection: $category) {
+//                        ForEach(categories, id: \ .self) { category in
+//                            Text(category)
+//                        }
+//                    }
+//                    .pickerStyle(MenuPickerStyle())
+//                }
                 
-                Section(header: Text("Participants")) {
+                Section(header: Text("Participants").font(.callout)) {
                     if let selectedGroup = groupStore.groups.first(where: { $0.name == group }) {
                         ForEach(selectedGroup.participants, id: \ .self) { participant in
                             HStack {

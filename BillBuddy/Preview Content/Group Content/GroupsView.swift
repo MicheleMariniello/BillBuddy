@@ -163,7 +163,8 @@ struct GroupsView: View {
                     Button(action: {
                         showAddGroupSheet = true
                     }) {
-                        Image(systemName: "plus")
+                        Image(systemName: "plus.circle.fill")
+                            .font(.title)
                     }
                     .accessibilityLabel("Button plus, Tap to add a new group") // Descrizione
                 }

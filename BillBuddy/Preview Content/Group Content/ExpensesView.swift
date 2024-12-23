@@ -108,9 +108,11 @@ struct ExpensesView: View {
                     .accessibilityElement(children: .combine) // Combinare tutti gli elementi figli come un'unica unità
                     .accessibilityLabel("\(expense.name), \(String(format: "%.2f", expense.amount))€, Paid by \(expense.payer)") // Descrizione dell'elemento
                 }
-                .onDelete { indexSet in
-                    deleteExpense(at: indexSet)
-                }
+                
+                //PER ELIMINARE LA SPESA CON LO SWIPE
+//                .onDelete { indexSet in
+//                    deleteExpense(at: indexSet)
+//                }
             }
             
             .confirmationDialog("Are you sure you want to delete this expense?",
@@ -136,17 +138,19 @@ struct ExpensesView: View {
         .navigationTitle(group.name)
     }
     
-    func deleteExpense(at offsets: IndexSet) {
-        if let index = offsets.first {
-            groupStore.removeExpense(from: group, at: index)
-        }
-    }
-    
     func deleteExpense(expense: Expense) {
         if let index = group.expenses.firstIndex(where: { $0.name == expense.name }) {
             groupStore.removeExpense(from: group, at: index)
         }
     }
+    
+    //FUNZIONE CHE PERMETTE DI ELIMINARE LA FUNZIONE CON LO SWIPE
+//    func deleteExpense(at offsets: IndexSet) {
+//        if let index = offsets.first {
+//            groupStore.removeExpense(from: group, at: index)
+//        }
+//    }
+    
 }
 
 //struct ExpensesView_Previews: PreviewProvider {

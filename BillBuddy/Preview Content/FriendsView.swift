@@ -8,7 +8,7 @@ import SwiftUI
 
 struct FriendsView: View {
     var body: some View {
-        Text("Friends Screen")
+        Text("Social Part Of\n\n     The App")
             .font(.title)
     }
 }
