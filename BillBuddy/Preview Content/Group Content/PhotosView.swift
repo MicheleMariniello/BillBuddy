@@ -10,8 +10,10 @@ struct PhotosView: View {
     @State private var cards: [String] = [] // Inizializza con un array vuoto di Cards
     @State private var cardToDelete: String? = nil // Card da eliminare
     @State private var showDeleteConfirmation = false // Stato per confermare la cancellazione
-    @State private var showLongPressConfirmation = false // Stato per la conferma di lunga pressione
-    @State private var cardToDeleteOnLongPress: String? = nil // Card da eliminare con lunga pressione
+    
+    @State private var albumCounter = 0 // Contatore per gli album
+    @State private var showSheet = false // Stato per il foglio di input
+    @State private var newAlbumName = "" // Nome dell'album da creare
     
     // Definiamo i GridItem per la disposizione delle card nella griglia
     private let columns = [GridItem(.flexible(), spacing: 10), GridItem(.flexible(), spacing: 10)] // Due colonne con uno spazio tra le card
@@ -20,6 +22,7 @@ struct PhotosView: View {
     init() {
         if let savedCards = UserDefaults.standard.array(forKey: "cards") as? [String] {
             _cards = State(initialValue: savedCards)
+            albumCounter = savedCards.count // Imposta il contatore sull'ultimo numero di album
         }
     }
     
@@ -29,7 +32,7 @@ struct PhotosView: View {
             HStack {
                 Spacer()
                 Button(action: {
-                    addCard()
+                    showSheet = true // Mostra il foglio per inserire il nome dell'album
                 }) {
                     HStack {
                         Image(systemName: "plus.circle.fill")
@@ -37,7 +40,7 @@ struct PhotosView: View {
                             .foregroundColor(.accentColor)
                     }
                 }
-                .accessibilityHint("Button plus, Tap to add a new album") // Suggerimento di
+                .accessibilityHint("Button plus, Tap to add a new album")
                 .padding()
             }
             .background(Color.accentColor5)
@@ -61,20 +64,14 @@ struct PhotosView: View {
                                 )
                                 .contextMenu {
                                     Button(action: {
-                                        deleteCard(card)
+                                        cardToDelete = card
+                                        showDeleteConfirmation = true
                                     }) {
                                         Text("Delete")
                                         Image(systemName: "trash")
                                     }
                                 }
                         }
-                        .gesture(
-                            LongPressGesture(minimumDuration: 1.0)
-                                .onEnded { _ in
-                                    cardToDeleteOnLongPress = card
-                                    showLongPressConfirmation = true
-                                }
-                        )
                     }
                 }
                 .padding(.horizontal)
@@ -92,25 +89,39 @@ struct PhotosView: View {
                     deleteCard(card) // Rimuovi la card e aggiorna la UI
                 }
             }
-            Button("Cancel", role: .cancel, action: {})
+            Button("Cancel", role: .cancel) {}
         }
-        .alert(isPresented: $showLongPressConfirmation) {
-            Alert(
-                title: Text("Delete Album"),
-                message: Text("Do you want to delete the album \(cardToDeleteOnLongPress ?? "")?"),
-                primaryButton: .destructive(Text("Delete")) {
-                    if let card = cardToDeleteOnLongPress {
-                        deleteCard(card) // Rimuovi la card e aggiorna la UI
+        .sheet(isPresented: $showSheet) {
+            // Finestra per inserire il nome dell'album
+            VStack {
+                Text("Enter album name:")
+                    .font(.headline)
+                TextField("Album Name", text: $newAlbumName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                
+                HStack {
+                    Button("Cancel") {
+                        showSheet = false
                     }
-                },
-                secondaryButton: .cancel()
-            )
+                    .padding()
+                    
+                    Button("Save") {
+                        addCard(with: newAlbumName)
+                        showSheet = false
+                    }
+                    .padding()
+                    .disabled(newAlbumName.isEmpty) // Disabilita il pulsante se il campo è vuoto
+                }
+            }
+            .padding()
         }
     }
     
-    // Funzioni di utilità
-    func addCard() {
-        cards.append("New Album \(cards.count + 1)")
+    // Funzione per aggiungere una nuova card con nome personalizzato
+    func addCard(with name: String) {
+        albumCounter += 1
+        cards.append(name) // Usa il nome inserito
         saveCards()
     }
     
