@@ -31,7 +31,7 @@ struct GroupDetailView: View {
                     .tag(0)
                 BalancesView(groupStore: groupStore, group: group)
                     .tag(1)
-                PhotosView()
+                PhotosView(groupStore: groupStore, group: group)
                     .tag(2)
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))

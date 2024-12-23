@@ -12,13 +12,15 @@ struct Group: Identifiable, Codable {
     var name: String
     var participants: [String]
     var expenses: [Expense] // Lista di spese
+    var photos: [String]
     
     // Inizializzatore
-    init(id: UUID = UUID(), name: String, participants: [String], expenses: [Expense] = []) {
+    init(id: UUID = UUID(), name: String, participants: [String], expenses: [Expense] = [], photos: [String] = []) {
         self.id = id
         self.name = name
         self.participants = participants
         self.expenses = expenses
+        self.photos = photos
     }
     
     // Funzione per salvare le spese del gruppo

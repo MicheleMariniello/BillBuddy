@@ -7,23 +7,19 @@
 import SwiftUI
 
 struct PhotosView: View {
+    @ObservedObject var groupStore: GroupsModel
+    var group: Group
     @State private var cards: [String] = [] // Inizializza con un array vuoto di Cards
-    @State private var cardToDelete: String? = nil // Card da eliminare
-    @State private var showDeleteConfirmation = false // Stato per confermare la cancellazione
+    @State private var cardToDelete: String? = nil
+    @State private var showDeleteConfirmation = false
+    @State private var showSheet = false
+    @State private var newAlbumName = ""
     
-    @State private var albumCounter = 0 // Contatore per gli album
-    @State private var showSheet = false // Stato per il foglio di input
-    @State private var newAlbumName = "" // Nome dell'album da creare
-    
-    // Definiamo i GridItem per la disposizione delle card nella griglia
-    private let columns = [GridItem(.flexible(), spacing: 10), GridItem(.flexible(), spacing: 10)] // Due colonne con uno spazio tra le card
-    
-    // Carica le card salvate in UserDefaults all'inizializzazione
-    init() {
-        if let savedCards = UserDefaults.standard.array(forKey: "cards") as? [String] {
-            _cards = State(initialValue: savedCards)
-            albumCounter = savedCards.count // Imposta il contatore sull'ultimo numero di album
-        }
+    // Carica le foto del gruppo all'inizializzazione
+    init(groupStore: GroupsModel, group: Group) {
+        self.groupStore = groupStore
+        self.group = group
+        self._cards = State(initialValue: loadCards()) // Carica le cards da UserDefaults
     }
     
     var body: some View {
@@ -47,7 +43,7 @@ struct PhotosView: View {
             
             // Griglia delle cards
             ScrollView {
-                LazyVGrid(columns: columns, spacing: 15) {
+                LazyVGrid(columns: [GridItem(.flexible(), spacing: 10), GridItem(.flexible(), spacing: 10)], spacing: 15) {
                     ForEach(cards, id: \.self) { card in
                         VStack {
                             Text(card)
@@ -92,7 +88,6 @@ struct PhotosView: View {
             Button("Cancel", role: .cancel) {}
         }
         .sheet(isPresented: $showSheet) {
-            // Finestra per inserire il nome dell'album
             VStack {
                 Text("Enter album name:")
                     .font(.headline)
@@ -111,7 +106,7 @@ struct PhotosView: View {
                         showSheet = false
                     }
                     .padding()
-                    .disabled(newAlbumName.isEmpty) // Disabilita il pulsante se il campo è vuoto
+                    .disabled(newAlbumName.isEmpty)
                 }
             }
             .padding()
@@ -120,25 +115,42 @@ struct PhotosView: View {
     
     // Funzione per aggiungere una nuova card con nome personalizzato
     func addCard(with name: String) {
-        albumCounter += 1
         cards.append(name) // Usa il nome inserito
-        saveCards()
+        updateGroupStore() // Aggiorna le foto nel gruppo
     }
     
     func deleteCard(_ card: String) {
         if let index = cards.firstIndex(of: card) {
             cards.remove(at: index)
-            saveCards()
+            updateGroupStore() // Aggiorna le foto nel gruppo
+        }
+    }
+    
+    // Funzione per aggiornare il gruppo con le nuove cards
+    func updateGroupStore() {
+        if let groupIndex = groupStore.groups.firstIndex(where: { $0.id == group.id }) {
+            groupStore.groups[groupIndex].photos = cards // Salva le foto nel gruppo
+            saveCards() // Salva anche in UserDefaults
         }
     }
     
     func saveCards() {
-        UserDefaults.standard.set(cards, forKey: "cards")
+        UserDefaults.standard.set(cards, forKey: "Photos_\(group.id.uuidString)") // Salva le foto per il gruppo
+    }
+    
+    // Funzione per caricare le cards da UserDefaults
+    func loadCards() -> [String] {
+        if let savedCards = UserDefaults.standard.array(forKey: "Photos_\(group.id.uuidString)") as? [String] {
+            return savedCards
+        }
+        return [] // Ritorna un array vuoto se non ci sono dati salvati
     }
 }
 
-struct PhotosView_Previews: PreviewProvider {
-    static var previews: some View {
-        PhotosView()
-    }
-}
+
+
+//struct PhotosView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PhotosView()
+//    }
+//}
