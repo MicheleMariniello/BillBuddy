@@ -24,9 +24,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		29BD3B562D073481004EBAD3 /* BillBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BillBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		29BD3B662D073481004EBAD3 /* BillBuddyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BillBuddyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		29BD3B702D073481004EBAD3 /* BillBuddyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BillBuddyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		29A67D422D1D826100530C11 /* BillBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BillBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		29A67D432D1D826100530C11 /* BillBuddyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BillBuddyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		29A67D442D1D826100530C11 /* BillBuddyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BillBuddyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -78,18 +78,10 @@
 				29BD3B582D073481004EBAD3 /* BillBuddy */,
 				29BD3B692D073481004EBAD3 /* BillBuddyTests */,
 				29BD3B732D073481004EBAD3 /* BillBuddyUITests */,
-				29BD3B572D073481004EBAD3 /* Products */,
+				29A67D422D1D826100530C11 /* BillBuddy.app */,
+				29A67D432D1D826100530C11 /* BillBuddyTests.xctest */,
+				29A67D442D1D826100530C11 /* BillBuddyUITests.xctest */,
 			);
-			sourceTree = "<group>";
-		};
-		29BD3B572D073481004EBAD3 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				29BD3B562D073481004EBAD3 /* BillBuddy.app */,
-				29BD3B662D073481004EBAD3 /* BillBuddyTests.xctest */,
-				29BD3B702D073481004EBAD3 /* BillBuddyUITests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -114,7 +106,7 @@
 			packageProductDependencies = (
 			);
 			productName = BillBuddy;
-			productReference = 29BD3B562D073481004EBAD3 /* BillBuddy.app */;
+			productReference = 29A67D422D1D826100530C11 /* BillBuddy.app */;
 			productType = "com.apple.product-type.application";
 		};
 		29BD3B652D073481004EBAD3 /* BillBuddyTests */ = {
@@ -137,7 +129,7 @@
 			packageProductDependencies = (
 			);
 			productName = BillBuddyTests;
-			productReference = 29BD3B662D073481004EBAD3 /* BillBuddyTests.xctest */;
+			productReference = 29A67D432D1D826100530C11 /* BillBuddyTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		29BD3B6F2D073481004EBAD3 /* BillBuddyUITests */ = {
@@ -160,7 +152,7 @@
 			packageProductDependencies = (
 			);
 			productName = BillBuddyUITests;
-			productReference = 29BD3B702D073481004EBAD3 /* BillBuddyUITests.xctest */;
+			productReference = 29A67D442D1D826100530C11 /* BillBuddyUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -196,7 +188,7 @@
 			mainGroup = 29BD3B4D2D073480004EBAD3;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 29BD3B572D073481004EBAD3 /* Products */;
+			productRefGroup = 29BD3B4D2D073480004EBAD3;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -321,6 +313,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -378,6 +373,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
