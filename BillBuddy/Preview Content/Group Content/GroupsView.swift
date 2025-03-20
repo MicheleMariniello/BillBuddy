@@ -1,9 +1,3 @@
-//
-//  GroupsView.swift
-//  BillBuddy
-//
-//  Created by Michele Mariniello on 09/12/24.
-//
 import SwiftUI
 
 // Modello Group

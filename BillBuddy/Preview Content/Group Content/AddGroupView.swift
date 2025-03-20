@@ -43,7 +43,7 @@ struct AddGroupView: View {
                             Image(systemName: "plus.circle.fill")
                                 .foregroundColor(.accentColor)
                         }
-                        .disabled(participantName.isEmpty) // Disabilita se il campo è vuoto
+                        .disabled(participantName.isEmpty)
                     }
                 }
             }

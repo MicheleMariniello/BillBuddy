@@ -21,11 +21,6 @@ struct ContentView: View {
                             Label("Groups", systemImage: "rectangle.3.group.fill")
                         }
                         .tag(0)
-                    FriendsView()
-                        .tabItem {
-                            Label("Friends", systemImage: "person.2.fill")
-                        }
-                        .tag(1)
                     AccountView()
                         .tabItem {
                             Label("Profile", systemImage: "gearshape.fill")
@@ -33,10 +28,6 @@ struct ContentView: View {
                         .tag(4)
                 }
             }
-//             Quando isAddExpenseViewPresented è true, si apre la sheet
-//            .sheet(isPresented: $isAddExpenseViewPresented) {
-//                AddExpenseView(isPresented: $isAddExpenseViewPresented, groupStore: groupStore, expenses: $expenses)
-//            }
         }
     }
 }

@@ -49,22 +49,26 @@ struct AddExpenseView: View {
         NavigationView {
             Form {
                 Section(header: Text("Expense Details").font(.callout)) {
-                    Picker("Group", selection: $group) {
-                        ForEach(groupStore.groups.map { $0.name }, id: \ .self) { groupName in
-                            Text(groupName).tag(groupName)
+                    if #available(iOS 17.0, *) {
+                        Picker("Group", selection: $group) {
+                            ForEach(groupStore.groups.map { $0.name }, id: \ .self) { groupName in
+                                Text(groupName).tag(groupName)
+                            }
                         }
-                    }
-                    .onChange(of: group) {
-                        selectedParticipants.removeAll() // Resetta i partecipanti quando cambia gruppo
-                        contributions.removeAll()
+                        .onChange(of: group) {
+                            selectedParticipants.removeAll()
+                            contributions.removeAll()
+                        }
                     }
                     
                     TextField("Description of the expense", text: $expenseName)
-                    TextField("Amount (€)", text: $amount)
-                        .keyboardType(.decimalPad)
-                        .onChange(of: amount) {
-                            updateContributions()
-                        }
+                    if #available(iOS 17.0, *) {
+                        TextField("Amount (€)", text: $amount)
+                            .keyboardType(.decimalPad)
+                            .onChange(of: amount) {
+                                updateContributions()
+                            }
+                    }
                     
                     // Payer Picker
                     if let selectedGroup = groupStore.groups.first(where: { $0.name == group }) {

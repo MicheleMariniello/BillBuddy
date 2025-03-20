@@ -45,11 +45,11 @@ struct AccountView: View {
         .navigationTitle("Account")
         .preferredColorScheme(isDarkMode ? .dark : .light)  // Applica la modalità selezionata
         
-        Button("Logout"){
-            
-        }
-        .font(.title2)
-        .padding()
+//        Button("Logout"){
+//            
+//        }
+//        .font(.title2)
+//        .padding()
     }
 }
 

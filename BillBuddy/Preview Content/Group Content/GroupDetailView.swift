@@ -18,13 +18,17 @@ struct GroupDetailView: View {
     
     var body: some View {
         VStack {
-            Picker("Select Tab", selection: $selectedTab) {
-                Text("Expenses").tag(0)
-                Text("Balances").tag(1)
-                Text("Photos").tag(2)
+            if #available(iOS 17.0, *) {
+                Picker("Select Tab", selection: $selectedTab) {
+                    Text("Expenses").tag(0)
+                    Text("Balances").tag(1)
+                    Text("Photos").tag(2)
+                }
+                .pickerStyle(PalettePickerStyle())
+                .padding()
+            } else {
+                // Fallback on earlier versions
             }
-            .pickerStyle(PalettePickerStyle())
-            .padding()
             
             TabView(selection: $selectedTab) {
                 ExpensesView(groupStore: groupStore, group: group)
